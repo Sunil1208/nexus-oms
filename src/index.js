@@ -3,6 +3,7 @@ import express from "express";
 import { testDbConnection } from "./lib/db.js";
 import { dashbaordQueue } from "./lib/redis.js";
 import { dashboardFastHandler } from "./api/dashboardFast.js";
+import { dashboardLegacyHandler } from "./api/dashboardLegacy.js";
 
 async function main() {
     console.log("Nexus-OMS API starting...");
@@ -17,6 +18,8 @@ async function main() {
 
     // Fast dashboard endpoint
     app.get("/api/dashboard/fast", dashboardFastHandler);
+    // Legacy dashboard endpoint
+    app.get("/api/dashboard/legacy", dashboardLegacyHandler);
 
     // health
     app.get("/api/health", (req, res) => {
