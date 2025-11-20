@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Nexus-OMS is a high-scale, event-driven backend architecture designed to process 10+ million ecommerce orders, deliver sub-50ms dashboards, and ensure 100% consistency during high-concurrency writes.",
   "main": "index.js",
-   "scripts": {
+  "scripts": {
     "dev:api": "node src/index.js",
     "dev:worker": "node src/worker.js"
   },
@@ -29,6 +29,7 @@
   "dependencies": {
     "bullmq": "^5.64.0",
     "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "ioredis": "^5.8.2",
     "pg": "^8.16.3"
   }
