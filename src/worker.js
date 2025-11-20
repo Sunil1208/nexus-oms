@@ -1,6 +1,7 @@
 import { Worker } from "bullmq";
 import { redis } from "./lib/redis.js";
 import { config } from "./config/env.js";
+import { startScheduler } from "./worker/scheduler.js";
 
 async function main() {
     console.log("Nexus-OMS Worker starting...");
@@ -21,6 +22,8 @@ async function main() {
     worker.on("failed", (job, err) => {
         console.error(`Job ${job.id} has failed with error:`, err);
     });
+
+    startScheduler();
 
     console.log("Worker online and awaiting jobs...");
 
