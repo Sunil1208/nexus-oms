@@ -1,1 +1,32 @@
-console.log("Nexus-OMS Worker stub starting...");
+import { Worker } from "bullmq";
+import { redis } from "./lib/redis.js";
+import { config } from "./config/env.js";
+
+async function main() {
+    console.log("Nexus-OMS Worker starting...");
+
+    const worker = new Worker(
+        config.queueName,
+        async (job) => {
+            console.log(`Processing job ${job.id} of type ${job.name} with data:`, job.data);
+            return { received: true };
+        },
+        { connection: redis }
+    );
+
+    worker.on("completed", (job) => {
+        console.log(`Job ${job.id} has completed.`);
+    });
+
+    worker.on("failed", (job, err) => {
+        console.error(`Job ${job.id} has failed with error:`, err);
+    });
+
+    console.log("Worker online and awaiting jobs...");
+
+}
+
+main().catch((err) => {
+    console.error("Error in worker:", err);
+    process.exit(1);
+});
