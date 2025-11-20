@@ -1,0 +1,35 @@
+{
+  "name": "nexus-oms",
+  "version": "1.0.0",
+  "description": "Nexus-OMS is a high-scale, event-driven backend architecture designed to process 10+ million ecommerce orders, deliver sub-50ms dashboards, and ensure 100% consistency during high-concurrency writes.",
+  "main": "index.js",
+   "scripts": {
+    "dev:api": "node src/index.js",
+    "dev:worker": "node src/worker.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sunil1208/nexus-oms.git"
+  },
+  "keywords": [
+    "cqrs",
+    "outbox",
+    "nodejs",
+    "orders",
+    "postgres",
+    "redis"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Sunil1208/nexus-oms/issues"
+  },
+  "homepage": "https://github.com/Sunil1208/nexus-oms#readme",
+  "dependencies": {
+    "bullmq": "^5.64.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "^5.8.2",
+    "pg": "^8.16.3"
+  }
+}
