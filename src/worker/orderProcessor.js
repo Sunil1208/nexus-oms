@@ -5,8 +5,8 @@ import { pool } from "../lib/db.js";
  * Fetch fresh steps for CQRS.
  */
 async function fetchOrderSnapshot(client, orderId) {
-    const { rows } = await client.query(
-        `
+  const { rows } = await client.query(
+    `
             SELECT
                 o.id AS order_id,
                 u.full_name AS customer_name,
@@ -63,33 +63,33 @@ async function fetchOrderSnapshot(client, orderId) {
             WHERE o.id = $1
             LIMIT 1
                 `,
-        [orderId]
-    );
+    [orderId]
+  );
 
-    if (rows.length === 0) {
-        return null; // order no longer exists (deleted)
-    }
-    return rows[0];
+  if (rows.length === 0) {
+    return null; // order no longer exists (deleted)
+  }
+  return rows[0];
 }
 
 /**
  * Upser into read_ops_dashbaord (idempotent)
  */
 async function upsertReadModel(client, snapshot) {
-    const {
-        order_id,
-        customer_name,
-        vip_tier,
-        order_status,
-        payment_status,
-        shipping_status,
-        warehouse_city,
-        is_delayed,
-        ticket_severity,
-        order_created_at,
-    } = snapshot;
+  const {
+    order_id,
+    customer_name,
+    vip_tier,
+    order_status,
+    payment_status,
+    shipping_status,
+    warehouse_city,
+    is_delayed,
+    ticket_severity,
+    order_created_at,
+  } = snapshot;
 
-     await client.query(
+  await client.query(
     `
     INSERT INTO read_ops_dashboard (
       order_id,
@@ -135,10 +135,9 @@ async function upsertReadModel(client, snapshot) {
  * Delete from read_ops dashboard when the order no longer exists.
  */
 async function deleteFromReadModel(client, orderId) {
-    await client.query(
-    `DELETE FROM read_ops_dashboard WHERE order_id = $1`,
-    [orderId]
-  );
+  await client.query(`DELETE FROM read_ops_dashboard WHERE order_id = $1`, [
+    orderId,
+  ]);
 }
 
 /**
